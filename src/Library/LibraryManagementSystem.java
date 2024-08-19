@@ -135,15 +135,16 @@ public class LibraryManagementSystem {
 
             System.out.println("3. Add Book (Admin Only)");
             System.out.println("4. Remove Book (Admin Only)");
+            System.out.println("5. Show All User(Admin Only)");
 
-            System.out.println("5. Show All Issued Books By All User");
-            System.out.println("6. Search Book");
-            System.out.println("7. Display Books");
-            System.out.println("8. Issue Book");
-            System.out.println("9. Return Book");
-            System.out.println("10. View Issued Books");
-            System.out.println("11. Change your Name( Authority / user) or Password");
-            System.out.println("12. Exit");
+            System.out.println("6. Show All Issued Books By All User");
+            System.out.println("7. Search Book");
+            System.out.println("8. Display Books");
+            System.out.println("9. Issue Book");
+            System.out.println("10. Return Book");
+            System.out.println("11. View Issued Books");
+            System.out.println("12. Change your Name( Authority / user) or Password");
+            System.out.println("13. Exit");
             System.out.print("Choose an option: ");
             int choice = sc.nextInt();
             sc.nextLine();
@@ -151,10 +152,10 @@ public class LibraryManagementSystem {
             switch (choice) {
                 case 1:
                     System.out.print("Enter User ID: ");
-                    String userId = sc.nextLine();
-                    System.out.print("Enter Password: ");
-                    String password = sc.nextLine();
-                    userManager.registerUser(userId, password);
+                    String userId = sc.next();
+
+                    userManager.RegisterUser(userId);
+
                     System.out.println("User registered successfully!");
                 break;
 
@@ -162,7 +163,7 @@ public class LibraryManagementSystem {
                     System.out.print("Enter User ID: ");
                     userId = sc.nextLine();
                     System.out.print("Enter Password: ");
-                    password = sc.nextLine();
+                    String password = sc.nextLine();
                     User user = userManager.loginUser(userId, password);
                     if (user != null) {
                         while (true) {
@@ -208,10 +209,10 @@ public class LibraryManagementSystem {
 
                                 case 6:
                                     System.out.println("Logging out...");
-                                break;
+                                    break;
 
                                 default:
-                                System.out.println("Invalid choice. Please try again.");
+                                    System.out.println("Invalid choice. Please try again.");
                             }
 
                             if (userChoice == 6) break;
@@ -220,43 +221,71 @@ public class LibraryManagementSystem {
                     break;
 
                 case 3: // Admin functionality
-                    System.out.print("Enter Admin Username: ");
-                    String adminUsername = sc.nextLine();
-                    System.out.print("Enter Admin Password: ");
-                    String adminPassword = sc.nextLine();
-                    if (authority.authenticate(adminUsername, adminPassword)) {
-                        System.out.print("Enter Book Title: ");
-                        String titleToAdd = sc.nextLine();
-                        System.out.print("Enter Book Author: ");
-                        String authorToAdd = sc.nextLine();
-                        library.addBook(titleToAdd, authorToAdd);
-                        System.out.println("The book: " + titleToAdd + " by " + authorToAdd + " has been added.");
-                    } else {
-                        System.out.println("Invalid admin credentials.");
+                    for (int i = 2; i > 0; i--) {
+                        System.out.print("Enter Admin Username: ");
+                        String adminUsername = sc.nextLine();
+                        System.out.print("Enter Admin Password: ");
+                        String adminPassword = sc.nextLine();
+                        if (authority.authenticate(adminUsername, adminPassword)) {
+                            System.out.print("Enter Book Title: ");
+                            String titleToAdd = sc.nextLine();
+                            System.out.print("Enter Book Author: ");
+                            String authorToAdd = sc.nextLine();
+                            library.addBook(titleToAdd, authorToAdd);
+                            System.out.println("The book: " + titleToAdd + " by " + authorToAdd + " has been added.");
+                            i=0;
+                        } else if(i==1){
+                            System.out.println("Invalid admin credentials. You can try again ("+i+" times)");
+                        }else {
+                            System.out.println("Invalid admin credentials.");
+                        }
                     }
                     break;
 
                 case 4: // Admin functionality
-                    System.out.print("Enter Admin Username: ");
-                    adminUsername = sc.nextLine();
-                    System.out.print("Enter Admin Password: ");
-                    adminPassword = sc.nextLine();
-                    if (authority.authenticate(adminUsername, adminPassword)) {
-                        System.out.print("Enter Book Title: ");
-                        String titleToRemove = sc.nextLine();
-                        System.out.print("Enter Book Author: ");
-                        String authorToRemove = sc.nextLine();
-                        library.removeBook(titleToRemove, authorToRemove);
-                        System.out.println("The book: " + titleToRemove + " by " + authorToRemove + " has been removed.");
-                    } else {
-                        System.out.println("Invalid admin credentials.");
+                    for (int i = 2; i > 0; i--) {
+                        System.out.print("Enter Admin Username: ");
+                        String adminUsername = sc.nextLine();
+                        System.out.print("Enter Admin Password: ");
+                        String adminPassword = sc.nextLine();
+                        if (authority.authenticate(adminUsername, adminPassword)) {
+                            System.out.print("Enter Book Title: ");
+                            String titleToRemove = sc.nextLine();
+                            System.out.print("Enter Book Author: ");
+                            String authorToRemove = sc.nextLine();
+                            library.removeBook(titleToRemove, authorToRemove);
+                            System.out.println("The book: " + titleToRemove + " by " + authorToRemove + " has been removed.");
+                            i=0;
+                        }else if(i==1){
+                            System.out.println("Invalid admin credentials. You can try again ("+i+" times)");
+                        }else {
+                            System.out.println("Invalid admin credentials.");
+                        }
+                    }
+
+                    break;
+
+                case 5:
+                    for (int i = 2; i > 0; i--) {
+                        System.out.print("Enter Admin Username: ");
+                        String adminUsername = sc.nextLine();
+                        System.out.print("Enter Admin Password: ");
+                        String adminPassword = sc.nextLine();
+                        if (authority.authenticate(adminUsername, adminPassword)) {
+                            userManager.getUser();
+                            i=0;
+                        } else if(i==1){
+                            System.out.println("Invalid admin credentials. You can try again ("+i+" times)");
+                        }else {
+                            System.out.println("Invalid admin credentials.");
+                        }
                     }
                     break;
-                case 5:
+                case 6:
                     library.ShowAllIssuedBook();
                     break;
 
-                case 6:
+                case 7:
                     System.out.print("Enter Book Title: ");
                     String titleToSearch = sc.nextLine();
                     System.out.print("Enter Book Author: ");
@@ -264,19 +293,19 @@ public class LibraryManagementSystem {
                     library.searchBook(titleToSearch, authorToSearch);
                     break;
 
-                case 7:
+                case 8:
                     library.displayBooks();
                     break;
-                case 8:
+                case 9:
                     System.out.println("Please log in for issue books \uD83E\uDEF6.");
                     break;
-                case 9:
+                case 10:
                     System.out.println("Please log in for issue and return books \uD83E\uDEF6.");
                     break;
-                case 10:
+                case 11:
                     System.out.println("Please log in your userId for view issued books \uD83E\uDEF6.");
                     break;
-                case 11:
+                case 12:
                     System.out.println("1. Change your userName");
                     System.out.println("2. Change your userPass");
                     System.out.println("3. Change Admin name");
@@ -329,7 +358,7 @@ public class LibraryManagementSystem {
                     }
 
                     break;
-                case 12:
+                case 13:
                     System.out.println("Exiting the system...");
                     sc.close();
                     return;
