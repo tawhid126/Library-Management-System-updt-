@@ -6,12 +6,11 @@ public class Authority {
     private String username;
     private String password;
     private Scanner sc;
-    private static String hi   ;
-    private static String hello ;
+
 
     public Authority() {
-        this.username = hi;
-        this.password = hello;
+        this.username = "admin";
+        this.password = "admin123";
         sc = new Scanner(System.in);
     }
 
@@ -50,13 +49,7 @@ public class Authority {
             }
         }while (t-->0);
     }
-    public void name(){
-        username = "amdin";
-    }
-    public void namee(){
-        password = "admin123";
-    }
-
+    
     public boolean authenticate(String username, String password) {
         return this.username.equals(username) && this.password.equals(password);
     }
