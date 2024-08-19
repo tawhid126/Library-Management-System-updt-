@@ -3,6 +3,7 @@ package Library;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.SequencedCollection;
 
 public class UserManager extends Authority{
     private List<User> users;
@@ -25,8 +26,29 @@ public class UserManager extends Authority{
 
         return true;
     }
+    public boolean RegisterUser(String userId) {
+        for (User user : users) {
+            if (user.getUserId().equalsIgnoreCase(userId)) {
+                System.out.println("Username already exists. Please choose a different username .");
+                return false;
+            }
+        }
+        System.out.print("Enter Password: ");
+        String password = sc.next();
+        users.add(new User(userId, password));
 
-    public boolean userNmaeChecker( String userid ){
+        return true;
+    }
+
+    public void getUser() {
+        for (User user : users) {
+            System.out.println(user.getUserId());
+        }
+    }
+
+
+
+    public boolean userNmaeChecker(String userid) {
         for (User user : users) {
             if (user.getUserId().equalsIgnoreCase(userid)) {
                 return true;
